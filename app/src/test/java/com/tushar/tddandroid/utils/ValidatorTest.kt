@@ -1,7 +1,6 @@
-package com.tushar.tddandroid
+package com.tushar.tddandroid.utils
 
 import com.google.common.truth.Truth.assertThat
-import com.tushar.tddandroid.utils.Validator
 import org.junit.Test
 
 class ValidatorTest{
