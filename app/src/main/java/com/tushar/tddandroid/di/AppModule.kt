@@ -6,6 +6,8 @@ import androidx.room.RoomDatabase
 import com.tushar.tddandroid.data.local.ShoppingDao
 import com.tushar.tddandroid.data.local.ShoppingItemDatabase
 import com.tushar.tddandroid.data.remote.PixabayAPI
+import com.tushar.tddandroid.repository.ShoppingRepository
+import com.tushar.tddandroid.repository.ShoppingRepositoryImpl
 import com.tushar.tddandroid.utils.Constants
 import dagger.Module
 import dagger.Provides
@@ -22,7 +24,7 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideShoppingItemDatabase(@ApplicationContext context: Context) : RoomDatabase{
+    fun provideShoppingItemDatabase(@ApplicationContext context: Context) : ShoppingItemDatabase{
         return Room.databaseBuilder(
             context,
             ShoppingItemDatabase::class.java,
@@ -38,12 +40,20 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideShoppingDao() : PixabayAPI{
+    fun providePixabayApi() : PixabayAPI{
         return Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
             .baseUrl(Constants.BASE_URL)
             .build()
             .create(PixabayAPI::class.java)
     }
+
+
+    @Singleton
+    @Provides
+    fun provideShoppingRepository(dao: ShoppingDao, api: PixabayAPI) : ShoppingRepository{
+        return ShoppingRepositoryImpl(dao, api) as ShoppingRepository
+    }
+
 
 }
