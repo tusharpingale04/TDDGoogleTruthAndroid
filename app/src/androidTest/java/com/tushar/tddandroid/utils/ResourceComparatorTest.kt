@@ -1,23 +1,23 @@
-package com.tushar.tddandroid
+package com.tushar.tddandroid.utils
 
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import org.junit.Test
 import com.google.common.truth.Truth.assertThat
-import com.tushar.tddandroid.utils.CompareResource
+import com.tushar.tddandroid.R
 import org.junit.After
 import org.junit.Before
 
-class CompareResourceTest{
+class ResourceComparatorTest{
 
-    private lateinit var compareResource : CompareResource
+    private lateinit var compareResource : ResourceComparator
 
     /**
      * Runs before every test
      */
     @Before
     fun setUp(){
-        compareResource = CompareResource()
+        compareResource = ResourceComparator()
     }
 
     @Test
