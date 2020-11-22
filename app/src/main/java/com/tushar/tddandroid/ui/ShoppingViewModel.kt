@@ -13,7 +13,7 @@ import com.tushar.tddandroid.utils.Event
 import com.tushar.tddandroid.utils.Resource
 import kotlinx.coroutines.launch
 
-class ShoppingViewModel @ViewModelInject constructor(
+open class ShoppingViewModel @ViewModelInject constructor(
         private val repository: ShoppingRepository
 ): ViewModel() {
 

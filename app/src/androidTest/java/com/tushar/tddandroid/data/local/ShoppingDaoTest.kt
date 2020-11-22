@@ -1,22 +1,21 @@
 package com.tushar.tddandroid.data.local
 
-import android.content.Context
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.room.Room
-import androidx.test.core.app.ApplicationProvider
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.google.common.truth.Truth.assertThat
 import com.tushar.tddandroid.getOrAwaitValue
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
+import javax.inject.Inject
+import javax.inject.Named
 
-@RunWith(AndroidJUnit4::class)
+@HiltAndroidTest
 @SmallTest
 @ExperimentalCoroutinesApi
 class ShoppingDaoTest {
@@ -24,19 +23,19 @@ class ShoppingDaoTest {
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    private lateinit var database: ShoppingItemDatabase
+    @get:Rule
+    val hiltRule = HiltAndroidRule(this)
+
+    @Inject
+    @Named("test_db")
+    lateinit var database: ShoppingItemDatabase
+
     private lateinit var dao: ShoppingDao
+
 
     @Before
     fun setUp(){
-        val context = ApplicationProvider.getApplicationContext<Context>()
-        database = Room
-            .inMemoryDatabaseBuilder(
-                context,
-                ShoppingItemDatabase::class.java
-            ).allowMainThreadQueries()
-            .build()
-
+        hiltRule.inject()
         dao = database.shoppingDao()
     }
 
@@ -44,7 +43,6 @@ class ShoppingDaoTest {
     fun tearDown(){
         database.close()
     }
-
 
     @Test
     fun insertShoppingItem() = runBlockingTest {

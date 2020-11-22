@@ -7,10 +7,12 @@ import com.tushar.tddandroid.getOrAwaitValue
 import com.tushar.tddandroid.repository.FakeShoppingRepository
 import com.tushar.tddandroid.utils.Constants
 import com.tushar.tddandroid.utils.Status
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
+@ExperimentalCoroutinesApi
 class ShoppingViewModelTest{
 
     @get:Rule

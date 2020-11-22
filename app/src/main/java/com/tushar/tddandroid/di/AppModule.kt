@@ -3,6 +3,9 @@ package com.tushar.tddandroid.di
 import android.content.Context
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import com.tushar.tddandroid.R
 import com.tushar.tddandroid.data.local.ShoppingDao
 import com.tushar.tddandroid.data.local.ShoppingItemDatabase
 import com.tushar.tddandroid.data.remote.PixabayAPI
@@ -55,5 +58,14 @@ object AppModule {
         return ShoppingRepositoryImpl(dao, api) as ShoppingRepository
     }
 
+    @Singleton
+    @Provides
+    fun provideGlideInstance(
+        @ApplicationContext context: Context
+    ) = Glide.with(context).setDefaultRequestOptions(
+        RequestOptions()
+            .placeholder(R.drawable.ic_image)
+            .error(R.drawable.ic_image)
+    )
 
 }
